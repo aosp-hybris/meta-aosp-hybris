@@ -6,17 +6,22 @@ SRCBRANCH ??= "master"
 SRCREV ?= "${AUTOREV}"
 
 SRC_URI = "git://github.com/aosp-hybris/android-headers;branch=${SRCBRANCH};protocol=git"
+SRC_URI += "file://android-headers.pc.in"
+
 S = "${WORKDIR}/git"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 PROVIDES += "virtual/android-headers"
 
+do_compile() {
+    sed s/@version@/${PN}/g ${WORKDIR}/android-headers.pc.in > ${WORKDIR}/android-headers.pc
+}
+
 do_install() {
     install -d ${D}${includedir}/android
     cp -rv ${S}/* ${D}${includedir}/android/
-    rm -rf ${D}${includedir}/android/android-headers.pc
     install -d ${D}${libdir}/pkgconfig
-    install -m 0644 ${S}/android-headers.pc ${D}${libdir}/pkgconfig
+    install -m 0644 ${WORKDIR}/android-headers.pc ${D}${libdir}/pkgconfig
 }
 
 FILES_${PN} = ""
