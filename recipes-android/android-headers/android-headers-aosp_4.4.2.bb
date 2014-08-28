@@ -1,4 +1,4 @@
-require android-headers
+include android-headers.inc
 
 SRCBRANCH ??= "hybris-4.4.2_r1"
 SRCREV ?= "${AUTOREV}"
