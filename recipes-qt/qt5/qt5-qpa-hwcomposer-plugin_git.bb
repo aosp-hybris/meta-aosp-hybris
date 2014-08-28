@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://hwcomposer_backend.cpp;beginline=1;endline=40;md5=09c
 
 PV = "${QT_VERSION}+gitr${SRCPV}"
 
-DEPENDS = "qtbase libhybris qtwayland virtual/android-headers"
+DEPENDS = "qtbase libhybris virtual/android-headers"
 
 # We need to be ${MACHINE_ARCH} as we need to compile the source against a specific
 # Android version we select per machine
