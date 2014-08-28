@@ -15,7 +15,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 # We need the android headers which are now provided for compatiblity reasons as external
 # component. The android-headers are specific for the environment the android-system-image
 # is build with and can differ between different machines.
-DEPENDS += "virutal/android-headers"
+DEPENDS += "virtual/android-headers"
 
 PROVIDES += "virtual/libgles1 virtual/libgles2 virtual/egl virtual/libandroid-properties \
              virtual/libhardware"
@@ -36,6 +36,9 @@ COMPATIBLE_MACHINE_x86-64 = "(-)"
 
 # If you want to enable debugging/tracing functionality add the following to a bbappend
 # EXTRA_OECONF += "--enable-debug --enable-trace"
+
+# Build with android headers
+EXTRA_OECONF += "--with-android-headers=${STAGING_INCDIR}/android"
 
 # brokensep because configure creates include/android symlink to with-android-headers in ${S} not ${B}
 inherit autotools pkgconfig
