@@ -15,7 +15,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 # We need the android headers which are now provided for compatiblity reasons as external
 # component. The android-headers are specific for the environment the android-system-image
 # is build with and can differ between different machines.
-DEPENDS += "virutal/android-headers"
+DEPENDS += "virtual/android-headers"
 
 PROVIDES += "virtual/libgles1 virtual/libgles2 virtual/egl virtual/libandroid-properties \
              virtual/libhardware"
