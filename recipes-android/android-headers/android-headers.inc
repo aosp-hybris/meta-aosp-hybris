@@ -14,7 +14,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 PROVIDES += "virtual/android-headers"
 
 do_compile() {
-    sed s/@version@/${PN}/g ${WORKDIR}/android-headers.pc.in > ${WORKDIR}/android-headers.pc
+    sed s/@version@/${PV}/g ${WORKDIR}/android-headers.pc.in > ${WORKDIR}/android-headers.pc
 }
 
 do_install() {
