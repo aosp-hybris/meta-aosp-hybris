@@ -15,7 +15,8 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 # We need the android headers which are now provided for compatiblity reasons as external
 # component. The android-headers are specific for the environment the android-system-image
 # is build with and can differ between different machines.
-DEPENDS += "virtual/android-headers"
+DEPENDS = "virtual/android-headers \
+        ${@base_contains('DISTRO_FEATURES', 'wayland', 'wayland', '', d)}"
 
 PROVIDES += "virtual/libgles1 virtual/libgles2 virtual/egl virtual/libandroid-properties \
              virtual/libhardware"
@@ -39,6 +40,9 @@ COMPATIBLE_MACHINE_x86-64 = "(-)"
 
 # Build with android headers
 EXTRA_OECONF += "--with-android-headers=${STAGING_INCDIR}/android"
+
+# Enable support for wayland
+EXTRA_OECONF += "${@base_contains('DISTRO_FEATURES', 'wayland', '--enable-wayland', '', d)}"
 
 # brokensep because configure creates include/android symlink to with-android-headers in ${S} not ${B}
 inherit autotools pkgconfig
