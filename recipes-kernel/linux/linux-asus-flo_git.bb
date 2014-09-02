@@ -14,7 +14,7 @@ SECOND_RAM_BASE = "0x10f00000"
 TAGS_RAM_BASE = "0x10000100"
 BOOT_PARTITION = "/dev/mmcblk0p2"
 
-inherit kernel_android
+inherit kernel-android
 
 SRC_URI = " \
   git://github.com/shr-distribution/linux.git;protocol=git;branch=grouper/3.1/master \
