@@ -19,7 +19,7 @@ SRC_URI = " \
 
 # Create additional android users we need (need to have same UIDs as in android)
 USERADD_PACKAGES = "${PN}"
-USERADD_PARAM_${PN} = "-u 1000 -M system; -u 1001 -M radio; -u 1003 -M graphics; -u 1004 -M input;"
+USERADD_PARAM_${PN} = "-u 1000 -M system; -u 1001 -M radio; -u 1003 -M android_graphics; -u 1004 -M android_input;"
 
 do_install() {
         install -d ${D}${systemd_unitdir}/system
