@@ -10,6 +10,8 @@ SRCREV ?= "${AUTOREV}"
 SRC_URI = "git://github.com/aosp-hybris/lxc-android-config;branch=${SRCBRANCH};protocol=git"
 S = "${WORKDIR}/git"
 
+PV = "1.0.0+git${SRCPV}"
+
 do_install() {
     install -d ${D}/var/lib/lxc/android
     cp -rf ${S}/var/lib/lxc/android/* ${D}/var/lib/lxc/android
