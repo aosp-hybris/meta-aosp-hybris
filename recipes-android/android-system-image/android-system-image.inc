@@ -19,23 +19,23 @@ do_compile () {
 
     mkdir -p ${WORKDIR}/build
     grep -v -E "(^\#|^$|^/dev/[^\w]*/[^\w]*|/sys)" ${S}/root/ueventd.rc | \
-        sed "s|/dev/||g" | awk '{ print "KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/999-android-system.rules
+        sed "s|/dev/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/999-android-system.rules
 
     grep -v -E "(^\#|^$|^/dev/[^\w]*/[^\w]*|/sys)" ${S}/ueventd.$ANDROID_DEVICE.rc | \
-        sed "s|/dev/||g" | awk '{ print "KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/999-android-system.rules
+        sed "s|/dev/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/999-android-system.rules
 
     grep -E "(^/dev/block/[^\w]*)" ${S}/ueventd.rc | \
-        sed "s|/dev/block/||g" | awk '{ print "KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/999-android-system.rules
+        sed "s|/dev/block/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/999-android-system.rules
 
     grep -E "(^/dev/block/[^\w]*)" $${S}/ueventd.$ANDROID_DEVICE.rc | \
-        sed "s|/dev/block/||g" | awk '{ print "KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/999-android-system.rules
+        sed "s|/dev/block/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/999-android-system.rules
 }
 
 do_install() {
     # TODO:
     # /android
     # /android/system
-    # /android/root
+    # /android/init.*
     # /android/symbols
     # /android/vendors
     # /system  <-- symlink
