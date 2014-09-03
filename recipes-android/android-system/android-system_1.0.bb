@@ -15,6 +15,7 @@ SRC_URI = " \
         file://android-system.service \
         file://wait-for-android.sh \
         file://android-chroot \
+        file://65-android.rules \
         "
 
 # Create additional android users we need (need to have same UIDs as in android)
@@ -28,6 +29,9 @@ do_install() {
         install -d ${D}${bindir}
         install -m 0755 ${WORKDIR}/android-chroot ${D}${bindir}
         install -m 0755 ${WORKDIR}/wait-for-android.sh ${D}${bindir}
+
+        install -d ${D}${sysconfdir}/udev/rules.d/
+        install -m 0755 ${WORKDIR}/build/65-android.rules ${D}${sysconfdir}/udev/rules.d/
 }
 
 SYSTEMD_AUTO_ENABLE = "disable"

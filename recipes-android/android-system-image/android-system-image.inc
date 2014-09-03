@@ -12,7 +12,6 @@ RPROVIDES_${PN} += "virtual/android-system-image"
 
 ANDROID_DEVICE ??= "${MACHINE}"
 
-SRC_URI += "file://65-android.rules"
 S = "${WORKDIR}"
 
 do_compile () {
@@ -55,7 +54,6 @@ do_install() {
     ln -sf /system/vendor  ${D}/vendor
 
     install -d ${D}${sysconfdir}/udev/rules.d/
-    install -m 0755 ${WORKDIR}/build/65-android.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0755 ${WORKDIR}/build/70-android.rules ${D}${sysconfdir}/udev/rules.d/
 }
 
