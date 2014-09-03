@@ -11,8 +11,6 @@ SRC_URI = "git://github.com/aosp-hybris/lxc-android-config;branch=${SRCBRANCH};p
 S = "${WORKDIR}/git"
 
 do_install() {
-    install -d ${D}/usr/lib/lxc-android-config
-    cp -rf ${S}/usr/lib/lxc-android-config/* ${D}/usr/lib/lxc-android-config/
-
-    install -d ${D}/var/lib/lxc/android/rootfs
+    install -d ${D}/var/lib/lxc/android
+    cp -rf ${S}/var/lib/lxc/android/* ${D}/var/lib/lxc/android
 }
