@@ -23,20 +23,25 @@ S = "${WORKDIR}"
 # 3 directories, 0 files
 
 do_compile () {
-    echo "Your ANDROID_DEVICE is \"${ANDROID_DEVICE}\", now building for udev rules."
 
     mkdir -p ${WORKDIR}/build
+    echo > ${WORKDIR}/build/70-android.rules
+
     grep -v -E "(^\#|^$|^/dev/[^\w]*/[^\w]*|/sys)" ${S}/root/ueventd.rc | \
         sed "s|/dev/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/70-android.rules
 
-    grep -v -E "(^\#|^$|^/dev/[^\w]*/[^\w]*|/sys)" ${S}/ueventd.$ANDROID_DEVICE.rc | \
-        sed "s|/dev/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/70-android.rules
-
-    grep -E "(^/dev/block/[^\w]*)" ${S}/ueventd.rc | \
+    grep -E "(^/dev/block/[^\w]*)" ${S}/root/ueventd.rc | \
         sed "s|/dev/block/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/70-android.rules
 
-    grep -E "(^/dev/block/[^\w]*)" $${S}/ueventd.$ANDROID_DEVICE.rc | \
-        sed "s|/dev/block/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/70-android.rules
+    if [ -e ${S}/root/ueventd.$ANDROID_DEVICE.rc ]; then
+        echo "Your ANDROID_DEVICE is \"${ANDROID_DEVICE}\", now building for udev rules."
+
+        grep -v -E "(^\#|^$|^/dev/[^\w]*/[^\w]*|/sys)" ${S}/root/ueventd.$ANDROID_DEVICE.rc | \
+            sed "s|/dev/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/70-android.rules
+
+        grep -E "(^/dev/block/[^\w]*)" $${S}/root/ueventd.$ANDROID_DEVICE.rc | \
+            sed "s|/dev/block/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/70-android.rules
+    fi
 }
 
 do_install() {
