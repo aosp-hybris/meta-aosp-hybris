@@ -14,6 +14,14 @@ ANDROID_DEVICE ??= "${MACHINE}"
 
 S = "${WORKDIR}"
 
+# The android-image source must look like following
+# .
+# ├── root
+# ├── symbols
+# └── system
+#
+# 3 directories, 0 files
+
 do_compile () {
     echo "Your ANDROID_DEVICE is \"${ANDROID_DEVICE}\", now building for udev rules."
 
