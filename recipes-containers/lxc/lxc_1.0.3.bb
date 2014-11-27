@@ -3,7 +3,7 @@ SECTION = "console/utils"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 PRIORITY = "optional"
-PR = "r5"
+PR = "r6"
 DEPENDS = "libxml2 libcap"
 RDEPENDS_${PN} = " \
                 rsync \
@@ -11,6 +11,7 @@ RDEPENDS_${PN} = " \
                 libcap-bin \
                 bridge-utils \
                 dnsmasq \
+                bash \
 "
 RDEPENDS_${PN}-ptest += "file make"
 
@@ -32,6 +33,7 @@ EXTRA_OECONF += "--with-distro=${DISTRO} ${PTEST_CONF}"
 
 PACKAGECONFIG ??= ""
 PACKAGECONFIG[doc] = "--enable-doc,--disable-doc,,"
+PACKAGECONFIG[api-docs] = "--enable-api-docs,--disable-api-docs,,"
 PACKAGECONFIG[rpath] = "--enable-rpath,--disable-rpath,,"
 PACKAGECONFIG[apparmour] = "--enable-apparmor,--disable-apparmor,apparmor,apparmor"
 
