@@ -6,7 +6,7 @@ SECTION = "devel"
 SRCBRANCH ??= "master"
 SRCREV ?= "${AUTOREV}"
 
-SRC_URI = "repo://github.com/aosp-hybris/platform_manifest.git;branch=${SRCBRANCH};protocol=git"
+SRC_URI = "${AOSP_HYBRIS_ANDROID_MANIFEST}"
 
 S = "${WORKDIR}/repo"
 
