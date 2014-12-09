@@ -9,7 +9,9 @@
 # doesn't, then the only way to guarantee that the first recipe will never be
 # used is to blacklist it.
 
-SDK_NAME_PREFIX = "hybris"
+SDK_NAME_PREFIX = "aosp-hybris"
 SDK_VERSION := "${@'${DISTRO_VERSION}'}"
 SDK_VENDOR = "-${SDK_NAME_PREFIX}"
 SDK_NAME = "${DISTRO}-${SDK_ARCH}-${IMAGE_BASENAME}-${TUNE_PKGARCH}"
+
+TARGET_VENDOR = "-${SDK_NAME_PREFIX}"
