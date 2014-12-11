@@ -22,7 +22,7 @@ do_install() {
         install -d ${D}${systemd_unitdir}/system
         install -m 0644 ${WORKDIR}/android-system.service ${D}${systemd_unitdir}/system
 
-        install -d ${D}${bindir}
+        install -d ${D}${sbindir}
         install -m 0755 ${WORKDIR}/droid-hal-init.sh ${D}${sbindir}
 
         install -d ${D}${sysconfdir}/udev/rules.d/
@@ -32,4 +32,4 @@ do_install() {
 SYSTEMD_AUTO_ENABLE = "disable"
 SYSTEMD_SERVICE_${PN} = "android-system.service"
 
-FILES_${PN} += "${sbindir} ${bindir}"
+FILES_${PN} += "${sbindir}"
