@@ -1,4 +1,5 @@
 require recipes-kernel/linux/linux.inc
+require setup-defconfig.inc
 
 DESCRIPTION = "Linux kernel for the Android emulator device (goldfish)"
 SECTION = "kernel"
