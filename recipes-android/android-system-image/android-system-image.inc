@@ -117,7 +117,6 @@ do_install() {
         group=`echo $line | cut -d' ' -f 3`
         mode=`echo $line | cut -d' ' -f 4`
         chown -h $user:$group ${D}/android/$file
-        echo "${D}/android/$file"
         # Avoid changing symlinks
         if [ ! -h ${D}/android/$file ] ; then
             chmod $mode ${D}/android/$file
