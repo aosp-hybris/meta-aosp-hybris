@@ -10,7 +10,8 @@ COMPATIBLE_MACHINE = "emulator|emulator-x86"
 SRCBRANCH ??= "master"
 SRCREV ?= "${AUTOREV}"
 
-SRC_URI = "git://github.com/aosp-hybris/android_kernel_goldfish.git;branch=${SRCBRANCH};protocol=git"
+# SRC_URI = "git://github.com/aosp-hybris/android_kernel_goldfish.git;branch=${SRCBRANCH};protocol=git"
+SRC_URI = "git://android.googlesource.com/kernel/goldfish;branch=${SRCBRANCH};protocol=git"
 
 S = "${WORKDIR}/git"
 
