@@ -5,6 +5,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-3.0;md5=c79ff39f19dfec6d293
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RDEPENDS_${PN} += "virtual/android-system-image"
+
 inherit systemd useradd
 
 SRC_URI = " \
@@ -25,8 +26,10 @@ do_install() {
         install -m 0755 ${WORKDIR}/droid-hal-init.sh ${D}${sbindir}
 
         install -d ${D}${sysconfdir}/udev/rules.d/
-        install -m 0755 ${WORKDIR}/build/65-android.rules ${D}${sysconfdir}/udev/rules.d/
+        install -m 0755 ${WORKDIR}/65-android.rules ${D}${sysconfdir}/udev/rules.d/
 }
 
 SYSTEMD_AUTO_ENABLE = "disable"
 SYSTEMD_SERVICE_${PN} = "android-system.service"
+
+FILES_${PN} += "${sbindir} ${bindir}"
