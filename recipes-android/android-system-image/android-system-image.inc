@@ -69,6 +69,15 @@ do_compile_append () {
     # hardware prompt
     echo "#\n\# AOSP_HYBRIS_PROPERTIES\n#\n" >> ${S}/$_target/system/build.prop
     echo "ro.hybris.bootinternal=1" >> ${S}/$_target/system/build.prop
+
+    # Fix all init.*.rc loading path
+    sed -i 's%import /init.%import /android/init.%g' ${S}/$_target/root/init.*
+
+    # Append function to generate bootdone flag
+    echo "" >> ${S}/$_target/root/init.rc
+    echo "service bootdone /system/bin/touch /dev/_android_boot_done" >> ${S}/$_target/root/init.rc
+    echo "    class late_start" >> ${S}/$_target/root/init.rc
+    echo "    oneshot" >> ${S}/$_target/root/init.rc
 }
 
 # TODO: generate android headers
@@ -119,10 +128,6 @@ do_install() {
     ln -sf /android/system  ${D}/system
     ln -sf /android/symbols ${D}/android/system/symbols
     ln -sf /system/vendor  ${D}/vendor
-
-    # FIXME: move to compile ?
-    # fix all init.*.rc loading path
-    sed -i 's%import /init.%import /android/init.%g' ${D}/android/init.*
 
     install -d ${D}${sysconfdir}/udev/rules.d/
     install -m 0755 ${WORKDIR}/build/70-android.rules ${D}${sysconfdir}/udev/rules.d/
