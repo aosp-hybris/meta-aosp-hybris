@@ -4,4 +4,7 @@ require ${BPN}.inc
 COMPATIBLE_MACHINE = "emulator"
 
 SRCBRANCH = "android-goldfish-3.4"
-KV = "3.4"
+SRCREV ?= "${AUTOREV}"
+
+LINUX_VERSION = "3.4"
+PV = "${LINUX_VERSION}+gitr${SRCPV}"
