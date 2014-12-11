@@ -12,6 +12,9 @@ fi
 
 echo "Waiting for droid-hal-init come up ..."
 
+# FIXME: should we rename this to droid-hal-init ?
+/android/init
+
 while true; do
         echo "Checking for boot done flag ..."
         [ -f $BOOTFLAG ] && break
