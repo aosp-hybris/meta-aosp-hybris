@@ -1,7 +1,7 @@
 require ${BPN}.inc
 
 # Mark archs/machines that this kernel supports
-COMPATIBLE_MACHINE = "emulator"
+COMPATIBLE_MACHINE = "goldfisharmv7"
 
 SRCBRANCH = "android-goldfish-2.6.29"
 SRCREV ?= "${AUTOREV}"

@@ -4,8 +4,10 @@ require setup-defconfig.inc
 DESCRIPTION = "Linux kernel for the Android emulator device (goldfish)"
 SECTION = "kernel"
 
+DEPENDS += "libgcc"
+
 # Mark archs/machines that this kernel supports
-COMPATIBLE_MACHINE = "emulator|emulator-x86"
+COMPATIBLE_MACHINE = "goldfisharmv7|goldfishx86"
 
 SRCBRANCH ??= "master"
 SRCREV ?= "${AUTOREV}"
@@ -16,9 +18,9 @@ SRC_URI = "git://android.googlesource.com/kernel/goldfish;branch=${SRCBRANCH};pr
 S = "${WORKDIR}/git"
 
 do_configure_prepend() {
-    if [ "${MACHINE}" == "emulator" ]; then
+    if [ "${MACHINE}" == "goldfisharmv7" ]; then
         echo "use-kernel-config=goldfish_armv7_defconfig" > ${WORKDIR}/defconfig
-    elif [ "${MACHINE}" == "emulator-x86" ]; then
+    elif [ "${MACHINE}" == "goldfishx86" ]; then
         echo "use-kernel-config=goldfish_defconfig" > ${WORKDIR}/defconfig
     else
         bberror "no suitable linux-goldfish config for ${MACHINE}"
