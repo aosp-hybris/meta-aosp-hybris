@@ -7,13 +7,13 @@ SECTION = "kernel"
 DEPENDS += "libgcc"
 
 # Mark archs/machines that this kernel supports
-COMPATIBLE_MACHINE = "goldfisharmv7|goldfishx86"
+COMPATIBLE_MACHINE = "goldfisharm*|goldfishx86"
 
 SRCBRANCH ??= "master"
 SRCREV ?= "${AUTOREV}"
 
-# SRC_URI = "git://github.com/aosp-hybris/android_kernel_goldfish.git;branch=${SRCBRANCH};protocol=https"
-SRC_URI = "git://android.googlesource.com/kernel/goldfish;branch=${SRCBRANCH};protocol=https"
+SRC_URI = "git://github.com/aosp-hybris/android_kernel_goldfish.git;branch=${SRCBRANCH};protocol=https"
+# SRC_URI = "git://android.googlesource.com/kernel/goldfish;branch=${SRCBRANCH};protocol=https"
 
 S = "${WORKDIR}/git"
 
