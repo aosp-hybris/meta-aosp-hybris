@@ -18,11 +18,14 @@ SRC_URI = "git://github.com/aosp-hybris/android_kernel_goldfish.git;branch=${SRC
 S = "${WORKDIR}/git"
 
 do_configure_prepend() {
-    if [ "${MACHINE}" == "goldfisharmv7" ]; then
-        echo "use-kernel-config=goldfish_armv7_defconfig" > ${WORKDIR}/defconfig
-    elif [ "${MACHINE}" == "goldfishx86" ]; then
-        echo "use-kernel-config=goldfish_defconfig" > ${WORKDIR}/defconfig
-    else
-        bberror "no suitable linux-goldfish config for ${MACHINE}"
+    # if no defconfig, use default config
+    if [ ! -e ${WORKDIR}/defconfig ]; then
+        if [ "${MACHINE}" == "goldfisharmv7" ]; then
+            echo "use-kernel-config=goldfish_armv7_defconfig" > ${WORKDIR}/defconfig
+        elif [ "${MACHINE}" == "goldfishx86" ]; then
+            echo "use-kernel-config=goldfish_defconfig" > ${WORKDIR}/defconfig
+        else
+            bberror "no suitable linux-goldfish config for ${MACHINE}"
+        fi
     fi
 }
