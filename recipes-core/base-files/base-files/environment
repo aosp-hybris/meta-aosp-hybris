@@ -1,0 +1,13 @@
+# This a configuration file for /etc/profile and systemd; it allows
+# you to set global environment unde console login and systemd.
+
+# Env for qt5
+PATH="/usr/bin/qt5:$PATH"
+
+# Env for maliit keyboard
+QT_IM_MODULE=Maliit
+LANG=en_US.UTF-8
+
+# Env for android
+LD_LIBRARY_PATH="/vendor/lib:/system/lib"
+PATH="$PATH:/system/bin:/system/xbin"
