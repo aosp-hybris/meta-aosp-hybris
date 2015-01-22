@@ -28,11 +28,10 @@ USERADD_PARAM_${PN} = "-u 1000 -M system; -u 1001 -M radio; -u 1003 -M android_g
 
 ANDROID_DEVICE ?= "${MACHINE}"
 
-do_configure() {
-    . build/envsetup.sh && lunch ${ANDROID_LUNCH_COMBO}
-}
-
 do_compile() {
+    # NOTE: to prevent environment change, make source env and compile
+    # in the same function
+    . build/envsetup.sh && lunch ${ANDROID_LUNCH_COMBO}
     oe_runmake
 }
 
