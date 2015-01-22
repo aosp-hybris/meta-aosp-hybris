@@ -62,7 +62,7 @@ do_compile_append () {
     if [ -e ${S}/$_target/root/ueventd.$ANDROID_DEVICE.rc ]; then
         echo "Your ANDROID_DEVICE is \"${ANDROID_DEVICE}\", now building for udev rules."
 
-        grep -v -E "(^\#|^$|^/dev/[^\w]*/[^\w]*|/sys)" ${S}$_target/root/ueventd.$ANDROID_DEVICE.rc | \
+        grep -v -E "(^\#|^$|^/dev/[^\w]*/[^\w]*|/sys)" ${S}/$_target/root/ueventd.$ANDROID_DEVICE.rc | \
             sed "s|/dev/||g" | awk '{ print "ACTION==\"add\" KERNEL==\"" $1 "\", MODE=\"" $2 "\", GROUP=\"" $4 "\", OWNER=\"" $3 "\"" }' >> ${WORKDIR}/build/70-android.rules
 
         grep -E "(^/dev/block/[^\w]*)" ${S}/$_target/root/ueventd.$ANDROID_DEVICE.rc | \
@@ -71,9 +71,32 @@ do_compile_append () {
         bbwarn "No extra ueventd.xxx.rc found, make sure you define ANDROID_DEVICE variable."
     fi
 
+    # Generate droid-permission-fixup.sh
+    # ref: https://github.com/mer-hybris/droid-system-packager/blob/master/bin/droid-system-prepare.sh
+    # grep -v /dev/input/ is here because otherwise directories in /dev/input/ get 660 permissions
+    # and groups do not have proper permissions to access those.
+    echo > ${WORKDIR}/build/droid-permission-fixup.sh
+
+    grep -E "(^/dev/[^\w]*/[^\w]*)"  ${S}/$_target/root/ueventd.$ANDROID_DEVICE.rc | \
+        grep -v /dev/input/ | grep -v /dev/block/ | sed "s|/dev/log/|/dev/alog/|g" | \
+        awk '{ print "chmod " $2 " " $1 "; chown " $3 ":" $4 " " $1 }'  >> ${WORKDIR}/build/droid-permission-fixup.sh
+
+    grep -E "(^/sys/)" ${S}/$_target/root/ueventd.$ANDROID_DEVICE.rc | \
+        awk '{ print "chmod " $3 " " $1 "/" $2 "; chown " $4 ":" $5 " " $1 "/" $2 }' >> ${WORKDIR}/build/droid-permission-fixup.sh
+
+    if [ -e ${S}/$_target/root/ueventd.$ANDROID_DEVICE.rc ]; then
+        grep -E "(^/dev/[^\w]*/[^\w]*)"  ${S}/$_target/root/ueventd.$ANDROID_DEVICE.rc | \
+            grep -v /dev/input/ | grep -v /dev/block/ | sed "s|/dev/log/|/dev/alog/|g" | \
+            awk '{ print "chmod " $2 " " $1 "; chown " $3 ":" $4 " " $1 }' >> ${WORKDIR}/build/droid-permission-fixup.sh
+
+        grep -E "(^/sys/)"  ${S}/$_target/root/ueventd.$ANDROID_DEVICE.rc | \
+           awk '{ print "chmod " $3 " " $1 "/" $2 "; chown " $4 ":" $5 " " $1 "/" $2 }' >>  ${WORKDIR}/build/droid-permission-fixup.sh
+    fi
+    chmod +x ${WORKDIR}/build/droid-permission-fixup.sh
+
     # Add ro.hybris.bootinternal=1 to prevent android's console steal
     # hardware prompt
-    echo "#\n\# AOSP_HYBRIS_PROPERTIES\n#\n" >> ${S}/$_target/system/build.prop
+    echo -e "#\n\# AOSP_HYBRIS_PROPERTIES\n#\n" >> ${S}/$_target/system/build.prop
     echo "ro.hybris.bootinternal=1" >> ${S}/$_target/system/build.prop
 
     # Fix all init.*.rc loading path
@@ -139,6 +162,9 @@ do_install() {
 
     install -d ${D}${sysconfdir}/udev/rules.d/
     install -m 0755 ${WORKDIR}/build/70-android.rules ${D}${sysconfdir}/udev/rules.d/
+
+    # special function
+    install -m 0755 ${WORKDIR}/build/droid-permission-fixup.sh ${D}/${sbindir}
 }
 
 # Append for install service
