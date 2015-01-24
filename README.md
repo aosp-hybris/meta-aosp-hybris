@@ -34,7 +34,8 @@ Table of Contents
 =================
 
   I. Adding the hybris layer to your build
- II. Misc
+ II. Dirty Hacks
+III. Misc
 
 
 I. Adding the hybris layer to your build
@@ -54,11 +55,20 @@ other layers needed. e.g.:
     /path/to/yocto/meta \
     /path/to/yocto/meta-yocto \
     /path/to/yocto/meta-yocto-bsp \
-    /path/to/yocto/meta-hybris \
+    /path/to/yocto/meta-aosp-hybris \
     "
 
+II. Dirty Hacks
+========
 
-II. Misc
+Since I building aosp-hybris via Vmware Fusion Share Folder, some
+package use *hardlink* need to be patched, following are packages I
+apply patch to switch hardlink to softlink.
+
+recipes-devtools/pkgconfig/files/0001-convert-hardlink-to-softlink.patch
+
+
+III. Misc
 ========
 
 --- replace with specific information about the hybris layer ---
