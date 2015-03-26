@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 DEPENDS = "util-linux"
 
-SRC_URI = "${UBUNTU_MIRROR}/${BPN}_${PV}.orig.tar.gz"
+SRC_URI = "${DEBIAN_MIRROR}/main/a/${BPN}_${PV}.orig.tar.gz"
 	
 BBCLASSEXTEND = "native"
 
