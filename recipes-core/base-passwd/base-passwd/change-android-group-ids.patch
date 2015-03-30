@@ -1,0 +1,22 @@
+Index: base-passwd-3.5.29/group.master
+===================================================================
+--- base-passwd-3.5.29.orig/group.master	2015-03-30 10:32:02.575903987 +0800
++++ base-passwd-3.5.29/group.master	2015-03-30 10:39:47.891897695 +0800
+@@ -12,7 +12,7 @@
+ man:*:12:
+ proxy:*:13:
+ kmem:*:15:
+-input:*:19:
++input:*:1004:
+ dialout:*:20:
+ fax:*:21:
+ voice:*:22:
+@@ -20,7 +20,7 @@
+ floppy:*:25:
+ tape:*:26:
+ sudo:*:27:
+-audio:*:29:
++audio:*:1005:
+ dip:*:30:
+ www-data:*:33:
+ backup:*:34:
